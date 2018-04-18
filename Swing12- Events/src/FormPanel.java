@@ -2,6 +2,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -10,13 +12,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public class FormPanel extends JPanel {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+public class FormPanel extends JPanel {
 	private static final long serialVersionUID = -8577913918273600961L;
+	private static final Logger log = LogManager.getLogger(FormPanel.class);
 	
 	private final JTextField nameField;
 	private final JTextField occupationField;
 	private final JButton okButton;
+	
+	private FormListener formListener;
 
 	public FormPanel() {
 		Dimension dim = getPreferredSize();
@@ -33,6 +40,23 @@ public class FormPanel extends JPanel {
 		JLabel occupationLabel = new JLabel("Occupation:");
 		occupationField = new JTextField(10);
 		okButton = new JButton("OK");
+		
+		okButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				log.debug("okBtn pressed");
+				String name = nameField.getText();
+				String occupation = occupationField.getText();
+				
+				FormEvent formEvent = new FormEvent(this, name, occupation);
+				
+				if(formListener != null) {
+					formListener.okBtnPressed(formEvent);
+				}
+				
+			}
+		});
 
 		setLayout(new GridBagLayout());
 
@@ -87,4 +111,9 @@ public class FormPanel extends JPanel {
 		add(okButton, gc);
 
 	}
+
+	public void setFormListener(FormListener formListener) {
+		this.formListener = formListener;
+	}
+	
 }
