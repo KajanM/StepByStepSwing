@@ -5,6 +5,8 @@ import javax.swing.WindowConstants;
 
 public class MainFrame extends JFrame {
 	
+	private static final long serialVersionUID = -4338620565171230172L;
+	
 	private final Toolbar toolbar;
 	private final FormPanel formPanel;
 	private final TextPanel textPanel;

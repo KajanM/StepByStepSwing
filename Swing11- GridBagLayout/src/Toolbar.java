@@ -10,6 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Toolbar extends JPanel implements ActionListener {
+	private static final long serialVersionUID = 1106347544861376924L;
+
 	private static final Logger log = LogManager.getLogger(Toolbar.class);
 	
 	private final JButton helloBtn;
