@@ -32,6 +32,7 @@ public class MainFrame extends JFrame {
 			public void okBtnPressed(FormEvent event) {
 				textPanel.appendText("Name: " + event.getName() + "\n");
 				textPanel.appendText("Occupation: " + event.getOccupation() + "\n");
+				textPanel.appendText("AgeCatId: " + event.getAgeCatId() + "\n");
 			}
 		});
 
