@@ -6,8 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -18,11 +20,12 @@ import org.apache.logging.log4j.Logger;
 public class FormPanel extends JPanel {
 	private static final long serialVersionUID = -8577913918273600961L;
 	private static final Logger log = LogManager.getLogger(FormPanel.class);
-	
+
 	private final JTextField nameField;
 	private final JTextField occupationField;
+	private final JList<String> ageCatList;
 	private final JButton okButton;
-	
+
 	private FormListener formListener;
 
 	public FormPanel() {
@@ -35,26 +38,28 @@ public class FormPanel extends JPanel {
 
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
-		JLabel nameLabel = new JLabel("Name:");
 		nameField = new JTextField(10);
-		JLabel occupationLabel = new JLabel("Occupation:");
 		occupationField = new JTextField(10);
+		ageCatList = new JList<>();
 		okButton = new JButton("OK");
-		
+
+		setUpAgeCatList();
+
 		okButton.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				log.debug("okBtn pressed");
 				String name = nameField.getText();
 				String occupation = occupationField.getText();
-				
+				String ageCat = ageCatList.getSelectedValue();
+
+				log.debug("Selected ageCat: " + ageCat);
+
 				FormEvent formEvent = new FormEvent(this, name, occupation);
-				
-				if(formListener != null) {
+
+				if (formListener != null) {
 					formListener.okBtnPressed(formEvent);
 				}
-				
 			}
 		});
 
@@ -76,7 +81,7 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = labelInsets;
 		gc.anchor = GridBagConstraints.LINE_END;
-		add(nameLabel, gc);
+		add(new JLabel("Name:"), gc);
 
 		gc.gridx = 1;
 		gc.insets = emptyInsets;
@@ -92,7 +97,7 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = labelInsets;
 		gc.anchor = GridBagConstraints.LINE_END;
-		add(occupationLabel, gc);
+		add(new JLabel("Occuaption:"), gc);
 
 		gc.gridx = 1;
 		gc.insets = emptyInsets;
@@ -103,8 +108,24 @@ public class FormPanel extends JPanel {
 		gc.gridy++;
 
 		gc.weightx = 1;
+		gc.weighty = 0.1;
+
+		gc.gridx = 0;
+		gc.insets = labelInsets;
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		add(new JLabel("Age Category:"), gc);
+
+		gc.gridx = 1;
+		gc.insets = emptyInsets;
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(ageCatList, gc);
+
+		//////////////////////// Next Row//////////////////////////////////////
+		gc.gridy++;
+
+		gc.weightx = 1;
 		gc.weighty = 2;
-		
+
 		gc.gridx = 1;
 		gc.insets = emptyInsets;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -112,8 +133,21 @@ public class FormPanel extends JPanel {
 
 	}
 
+	private void setUpAgeCatList() {
+		DefaultListModel<String> ageListModel = new DefaultListModel<>();
+		ageListModel.addElement("18 or below");
+		ageListModel.addElement("18 to 65");
+		ageListModel.addElement("65 or above");
+		ageCatList.setModel(ageListModel);
+
+		ageCatList.setPreferredSize(new Dimension(112, 68));
+		ageCatList.setBorder(BorderFactory.createEtchedBorder());
+		ageCatList.setSelectedIndex(1);
+
+	}
+
 	public void setFormListener(FormListener formListener) {
 		this.formListener = formListener;
 	}
-	
+
 }
