@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
@@ -27,7 +28,7 @@ public class MainFrame extends JFrame {
 		textPanel = new TextPanel();
 
 		setJMenuBar(createMenuBar());
-		
+
 		toolbar.setToolbarListener(new ToolbarListener() {
 			@Override
 			public void actionPerformed(String text) {
@@ -59,35 +60,39 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
-	
-	private JMenuBar createMenuBar() {		
+
+	private JMenuBar createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem exportFormData = new JMenuItem("Export Data...");
 		JMenuItem importFormData = new JMenuItem("Import Data...");
 		JMenuItem exitItem = new JMenuItem("Exit");
-		
+
 		exitItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				int action = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to exit?",
+						"Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
+				if(action == JOptionPane.OK_OPTION) {
+					System.exit(0);
+				}
 			}
 		});
-		
+
 		fileMenu.add(exportFormData);
 		fileMenu.add(importFormData);
 		fileMenu.addSeparator();
 		fileMenu.add(exitItem);
-		
+
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		exitItem.setMnemonic(KeyEvent.VK_X);
 		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
-		
+
 		JMenu showMenu = new JMenu("Show");
 		JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");
 		showFormItem.setSelected(true);
-		
+
 		showFormItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -95,15 +100,15 @@ public class MainFrame extends JFrame {
 				formPanel.setVisible(menuItem.isSelected());
 			}
 		});
-		
+
 		showMenu.add(showFormItem);
-		
+
 		JMenu windowMenu = new JMenu("Window");
 		windowMenu.add(showMenu);
-		
+
 		menuBar.add(fileMenu);
 		menuBar.add(windowMenu);
-		
+
 		return menuBar;
 	}
 }
