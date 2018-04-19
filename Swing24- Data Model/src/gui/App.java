@@ -1,3 +1,4 @@
+package gui;
 import javax.swing.SwingUtilities;
 
 import org.apache.logging.log4j.LogManager;
