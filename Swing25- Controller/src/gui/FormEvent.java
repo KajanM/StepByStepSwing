@@ -55,4 +55,11 @@ public class FormEvent extends EventObject {
 	public String getGender() {
 		return gender;
 	}
+
+	@Override
+	public String toString() {
+		return "FormEvent [name=" + name + ", occupation=" + occupation + ", ageCatId=" + ageCatId + ", empCategory="
+				+ empCategory + ", isSLCitizen=" + isSLCitizen + ", taxID=" + taxID + ", gender=" + gender + "]";
+	}
+	
 }

@@ -1,4 +1,5 @@
 package gui;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -18,9 +19,13 @@ import javax.swing.WindowConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import controller.Controller;
+
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = -4338620565171230172L;
 	private static Logger log = LogManager.getLogger(MainFrame.class);
+
+	private final Controller controller;
 
 	private final Toolbar toolbar;
 	private final FormPanel formPanel;
@@ -30,11 +35,13 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		super("Hello World");
 
+		controller = new Controller();
+
 		toolbar = new Toolbar();
 		formPanel = new FormPanel();
 		textPanel = new TextPanel();
 		fileChooser = new JFileChooser();
-		
+
 		fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
 		setJMenuBar(createMenuBar());
@@ -49,6 +56,11 @@ public class MainFrame extends JFrame {
 		formPanel.setFormListener(new FormListener() {
 			@Override
 			public void okBtnPressed(FormEvent event) {
+				// displayInTextPanel(event);
+				controller.addPerson(event);
+			}
+
+			private void displayInTextPanel(FormEvent event) {
 				textPanel.appendText("Name: " + event.getName() + "\n");
 				textPanel.appendText("Occupation: " + event.getOccupation() + "\n");
 				textPanel.appendText("AgeCatId: " + event.getAgeCatId() + "\n");
@@ -98,7 +110,7 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
-		
+
 		exportFormData.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

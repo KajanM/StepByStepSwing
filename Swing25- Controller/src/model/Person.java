@@ -10,10 +10,10 @@ public class Person {
 	private EmploymentCategory empCategory;
 	private boolean isSLCitizen;
 	private String taxID;
-	private String gender;
+	private Gender gender;
 	
 	public Person(String name, String occupation, AgeCategory ageCatId, EmploymentCategory empCategory,
-			boolean isSLCitizen, String taxID, String gender) {
+			boolean isSLCitizen, String taxID, Gender gender) {
 		super();
 		this.name = name;
 		this.occupation = occupation;
@@ -83,11 +83,19 @@ public class Person {
 		this.taxID = taxID;
 	}
 
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", occupation=" + occupation + ", ageCatId=" + ageCatId
+				+ ", empCategory=" + empCategory + ", isSLCitizen=" + isSLCitizen + ", taxID=" + taxID + ", gender="
+				+ gender + "]";
+	}
+	
 }
