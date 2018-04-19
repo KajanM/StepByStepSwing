@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -53,6 +54,7 @@ public class MainFrame extends JFrame {
 		add(formPanel, BorderLayout.WEST);
 		add(textPanel, BorderLayout.CENTER);
 
+		setMinimumSize(new Dimension(400, 450));
 		setSize(600, 500);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
