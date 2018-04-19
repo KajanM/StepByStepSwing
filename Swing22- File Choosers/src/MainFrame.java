@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -13,12 +14,17 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = -4338620565171230172L;
+	private static Logger log = LogManager.getLogger(MainFrame.class);
 
 	private final Toolbar toolbar;
 	private final FormPanel formPanel;
 	private final TextPanel textPanel;
+	private final JFileChooser fileChooser;
 
 	public MainFrame() {
 		super("Hello World");
@@ -26,6 +32,7 @@ public class MainFrame extends JFrame {
 		toolbar = new Toolbar();
 		formPanel = new FormPanel();
 		textPanel = new TextPanel();
+		fileChooser = new JFileChooser();
 
 		setJMenuBar(createMenuBar());
 
@@ -74,8 +81,26 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int action = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to exit?",
 						"Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
-				if(action == JOptionPane.OK_OPTION) {
+				if (action == JOptionPane.OK_OPTION) {
 					System.exit(0);
+				}
+			}
+		});
+
+		importFormData.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					log.debug(fileChooser.getSelectedFile());
+				}
+			}
+		});
+		
+		exportFormData.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					log.debug(fileChooser.getSelectedFile());
 				}
 			}
 		});
