@@ -1,12 +1,14 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 public class MainFrame extends JFrame {
@@ -62,12 +64,23 @@ public class MainFrame extends JFrame {
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem exportFormData = new JMenuItem("Export Data...");
 		JMenuItem importFormData = new JMenuItem("Import Data...");
-		JMenuItem exit = new JMenuItem("Exit");
+		JMenuItem exitItem = new JMenuItem("Exit");
+		
+		exitItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		
 		fileMenu.add(exportFormData);
 		fileMenu.add(importFormData);
 		fileMenu.addSeparator();
-		fileMenu.add(exit);
+		fileMenu.add(exitItem);
+		
+		fileMenu.setMnemonic(KeyEvent.VK_F);
+		exitItem.setMnemonic(KeyEvent.VK_X);
+		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
 		
 		JMenu showMenu = new JMenu("Show");
 		JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");

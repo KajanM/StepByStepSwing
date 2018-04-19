@@ -4,6 +4,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -25,10 +26,14 @@ import org.apache.logging.log4j.Logger;
 public class FormPanel extends JPanel {
 	private static final long serialVersionUID = -8577913918273600961L;
 	private static final Logger log = LogManager.getLogger(FormPanel.class);
-
+	
+	private final JLabel nameLabel;
 	private final JTextField nameField;
+	private final JLabel occupationLabel;
 	private final JTextField occupationField;
+	private final JLabel ageCatLabel;
 	private final JList<AgeCategory> ageCatList;
+	private final JLabel employmentLabel;
 	private final JComboBox<String> empCatCombo;
 	private final JCheckBox citizenCheckBox;
 	private final JLabel taxIdLabel;
@@ -51,9 +56,13 @@ public class FormPanel extends JPanel {
 
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
+		nameLabel = new JLabel("Name:");
 		nameField = new JTextField(10);
+		occupationLabel = new JLabel("Occupation:");
 		occupationField = new JTextField(10);
+		ageCatLabel = new JLabel("Age:");
 		ageCatList = new JList<>();
+		employmentLabel = new JLabel("Employment:");
 		empCatCombo = new JComboBox<>();
 		citizenCheckBox = new JCheckBox();
 		taxIdLabel = new JLabel("Tax ID:");
@@ -113,9 +122,26 @@ public class FormPanel extends JPanel {
 		});
 
 		layoutComponents();
+		
+		setMnemonics();
+	}
+
+	private void setMnemonics() {
+		nameLabel.setDisplayedMnemonic(KeyEvent.VK_N);
+		nameLabel.setLabelFor(nameField);
+		
+		occupationLabel.setDisplayedMnemonic(KeyEvent.VK_O);
+		occupationLabel.setLabelFor(occupationField);
+		
+		ageCatLabel.setDisplayedMnemonic(KeyEvent.VK_A);
+		ageCatLabel.setLabelFor(ageCatList);
+		
+		employmentLabel.setDisplayedMnemonic(KeyEvent.VK_E);
+		employmentLabel.setLabelFor(empCatCombo);
 	}
 
 	private void layoutComponents() {
+		
 		setLayout(new GridBagLayout());
 
 		GridBagConstraints gc = new GridBagConstraints();
@@ -134,7 +160,7 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = labelInsets;
 		gc.anchor = GridBagConstraints.FIRST_LINE_END;
-		add(new JLabel("Name:"), gc);
+		add(nameLabel, gc);
 
 		gc.gridx = 1;
 		gc.insets = emptyInsets;
@@ -150,7 +176,7 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = labelInsets;
 		gc.anchor = GridBagConstraints.FIRST_LINE_END;
-		add(new JLabel("Occuaption:"), gc);
+		add(occupationLabel, gc);
 
 		gc.gridx = 1;
 		gc.insets = emptyInsets;
@@ -166,7 +192,7 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = labelInsets;
 		gc.anchor = GridBagConstraints.FIRST_LINE_END;
-		add(new JLabel("Age:"), gc);
+		add(ageCatLabel, gc);
 
 		gc.gridx = 1;
 		gc.insets = emptyInsets;
@@ -182,7 +208,7 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = labelInsets;
 		gc.anchor = GridBagConstraints.FIRST_LINE_END;
-		add(new JLabel("Employment:"), gc);
+		add(employmentLabel, gc);
 
 		gc.gridx = 1;
 		gc.insets = emptyInsets;
