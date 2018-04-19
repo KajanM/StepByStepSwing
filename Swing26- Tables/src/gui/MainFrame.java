@@ -30,6 +30,7 @@ public class MainFrame extends JFrame {
 	private final Toolbar toolbar;
 	private final FormPanel formPanel;
 	private final TextPanel textPanel;
+	private final TablePanel tablePanel;
 	private final JFileChooser fileChooser;
 
 	public MainFrame() {
@@ -40,8 +41,11 @@ public class MainFrame extends JFrame {
 		toolbar = new Toolbar();
 		formPanel = new FormPanel();
 		textPanel = new TextPanel();
+		tablePanel = new TablePanel();
 		fileChooser = new JFileChooser();
 
+		tablePanel.setPeople(controller.getPeople());
+		
 		fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
 		setJMenuBar(createMenuBar());
@@ -58,6 +62,7 @@ public class MainFrame extends JFrame {
 			public void okBtnPressed(FormEvent event) {
 				// displayInTextPanel(event);
 				controller.addPerson(event);
+				tablePanel.refresh();
 			}
 
 			private void displayInTextPanel(FormEvent event) {
@@ -75,7 +80,7 @@ public class MainFrame extends JFrame {
 
 		add(toolbar, BorderLayout.NORTH);
 		add(formPanel, BorderLayout.WEST);
-		add(textPanel, BorderLayout.CENTER);
+		add(tablePanel, BorderLayout.CENTER);
 
 		setMinimumSize(new Dimension(400, 450));
 		setSize(600, 500);

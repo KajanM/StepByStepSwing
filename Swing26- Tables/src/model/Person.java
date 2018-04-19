@@ -6,18 +6,18 @@ public class Person {
 	private int id;
 	private String name;
 	private String occupation;
-	private AgeCategory ageCatId;
+	private AgeCategory ageCat;
 	private EmploymentCategory empCategory;
 	private boolean isSLCitizen;
 	private String taxID;
 	private Gender gender;
 	
-	public Person(String name, String occupation, AgeCategory ageCatId, EmploymentCategory empCategory,
+	public Person(String name, String occupation, AgeCategory ageCat, EmploymentCategory empCategory,
 			boolean isSLCitizen, String taxID, Gender gender) {
 		super();
 		this.name = name;
 		this.occupation = occupation;
-		this.ageCatId = ageCatId;
+		this.ageCat = ageCat;
 		this.empCategory = empCategory;
 		this.isSLCitizen = isSLCitizen;
 		this.taxID = taxID;
@@ -51,12 +51,12 @@ public class Person {
 		this.occupation = occupation;
 	}
 
-	public AgeCategory getAgeCatId() {
-		return ageCatId;
+	public AgeCategory getAgeCategory() {
+		return ageCat;
 	}
 
-	public void setAgeCatId(AgeCategory ageCatId) {
-		this.ageCatId = ageCatId;
+	public void setAgeCategroy(AgeCategory ageCat) {
+		this.ageCat = ageCat;
 	}
 
 	public EmploymentCategory getEmpCategory() {
@@ -93,7 +93,7 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [id=" + id + ", name=" + name + ", occupation=" + occupation + ", ageCatId=" + ageCatId
+		return "Person [id=" + id + ", name=" + name + ", occupation=" + occupation + ", ageCatId=" + ageCat
 				+ ", empCategory=" + empCategory + ", isSLCitizen=" + isSLCitizen + ", taxID=" + taxID + ", gender="
 				+ gender + "]";
 	}
