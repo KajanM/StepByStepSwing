@@ -6,8 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -24,6 +26,7 @@ public class FormPanel extends JPanel {
 	private final JTextField nameField;
 	private final JTextField occupationField;
 	private final JList<AgeCategory> ageCatList;
+	private final JComboBox<String>	empCatCombo;
 	private final JButton okButton;
 
 	private FormListener formListener;
@@ -41,18 +44,24 @@ public class FormPanel extends JPanel {
 		nameField = new JTextField(10);
 		occupationField = new JTextField(10);
 		ageCatList = new JList<>();
+		empCatCombo = new JComboBox<>();
 		okButton = new JButton("OK");
 
 		setUpAgeCatList();
-
+		
+		setupEmpCombo();
+	
 		okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				log.debug("okBtn pressed");
+				
 				String name = nameField.getText();
 				String occupation = occupationField.getText();
 				int ageCatId = ageCatList.getSelectedValue().getId();
-				FormEvent formEvent = new FormEvent(this, name, occupation, ageCatId);
+				String empCat = (String) empCatCombo.getSelectedItem();
+				
+				FormEvent formEvent = new FormEvent(this, name, occupation, ageCatId, empCat);
 
 				if (formListener != null) {
 					formListener.okBtnPressed(formEvent);
@@ -60,6 +69,14 @@ public class FormPanel extends JPanel {
 			}
 		});
 
+		layoutComponents();
+	}
+	
+	public void setFormListener(FormListener formListener) {
+		this.formListener = formListener;
+	}
+
+	private void layoutComponents() {
 		setLayout(new GridBagLayout());
 
 		GridBagConstraints gc = new GridBagConstraints();
@@ -110,12 +127,28 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = labelInsets;
 		gc.anchor = GridBagConstraints.FIRST_LINE_END;
-		add(new JLabel("Age Category:"), gc);
+		add(new JLabel("Age:"), gc);
 
 		gc.gridx = 1;
 		gc.insets = emptyInsets;
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(ageCatList, gc);
+		
+		//////////////////////// Next Row//////////////////////////////////////
+		gc.gridy++;
+		
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+		
+		gc.gridx = 0;
+		gc.insets = labelInsets;
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		add(new JLabel("Employment:"), gc);
+		
+		gc.gridx = 1;
+		gc.insets = emptyInsets;
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(empCatCombo, gc);
 
 		//////////////////////// Next Row//////////////////////////////////////
 		gc.gridy++;
@@ -127,7 +160,6 @@ public class FormPanel extends JPanel {
 		gc.insets = emptyInsets;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(okButton, gc);
-
 	}
 
 	private void setUpAgeCatList() {
@@ -140,13 +172,21 @@ public class FormPanel extends JPanel {
 		ageCatList.setPreferredSize(new Dimension(112, 68));
 		ageCatList.setBorder(BorderFactory.createEtchedBorder());
 		ageCatList.setSelectedIndex(1);
-
 	}
 
-	public void setFormListener(FormListener formListener) {
-		this.formListener = formListener;
+	private void setupEmpCombo() {
+		DefaultComboBoxModel<String> empCatModel = new DefaultComboBoxModel<>();
+		empCatModel.addElement("employed");
+		empCatModel.addElement("self-employed");
+		empCatModel.addElement("unemployed");
+		empCatCombo.setModel(empCatModel);
+		
+		Dimension dim = empCatCombo.getPreferredSize();
+		dim.width = 112;
+		empCatCombo.setPreferredSize(dim);
+		empCatCombo.setEditable(true);
+		empCatCombo.setSelectedIndex(0);
 	}
-
 }
 
 class AgeCategory {
