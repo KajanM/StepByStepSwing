@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import model.Person;
 
 public class TablePanel extends JTable {
+	private static final long serialVersionUID = -6326747653704529535L;
 	
 	private final JTable table;
 	private final PersonTableModel personTableModel;

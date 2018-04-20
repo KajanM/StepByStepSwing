@@ -7,7 +7,8 @@ import javax.swing.table.AbstractTableModel;
 import model.Person;;
 
 public class PersonTableModel extends AbstractTableModel {
-	
+	private static final long serialVersionUID = 5336999557498707378L;
+
 	private List<Person> people;
 	
 	private String[] colNames = {"ID", "Name", "Occupation", "Age Category", "Employment Category", "SL Citizen", "Tax ID", "Gender"};

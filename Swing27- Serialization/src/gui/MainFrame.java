@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -46,6 +48,8 @@ public class MainFrame extends JFrame {
 
 		tablePanel.setPeople(controller.getPeople());
 		
+		File resourceDir = new File(System.getProperty("user.dir") + "/src/resources");
+		fileChooser.setCurrentDirectory(resourceDir);
 		fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
 		setJMenuBar(createMenuBar());
@@ -65,6 +69,7 @@ public class MainFrame extends JFrame {
 				tablePanel.refresh();
 			}
 
+			@SuppressWarnings("unused")
 			private void displayInTextPanel(FormEvent event) {
 				textPanel.appendText("Name: " + event.getName() + "\n");
 				textPanel.appendText("Occupation: " + event.getOccupation() + "\n");
@@ -111,6 +116,13 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					try {
+						controller.loadFromFile(fileChooser.getSelectedFile());
+						tablePanel.refresh();
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(MainFrame.this, "Loading from file failed!", "Error", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
 					log.debug(fileChooser.getSelectedFile());
 				}
 			}
@@ -120,6 +132,12 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					try {
+						controller.saveToFile(fileChooser.getSelectedFile());
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(MainFrame.this, "Saving to file failed!", "Error", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
 					log.debug(fileChooser.getSelectedFile());
 				}
 			}

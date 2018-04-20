@@ -1,8 +1,12 @@
 package model;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
+	private static final long serialVersionUID = 18489614454626694L;
+
 	private static int count = 0;
-	
+
 	private int id;
 	private String name;
 	private String occupation;
@@ -11,7 +15,7 @@ public class Person {
 	private boolean isSLCitizen;
 	private String taxID;
 	private Gender gender;
-	
+
 	public Person(String name, String occupation, AgeCategory ageCat, EmploymentCategory empCategory,
 			boolean isSLCitizen, String taxID, Gender gender) {
 		super();
@@ -22,7 +26,7 @@ public class Person {
 		this.isSLCitizen = isSLCitizen;
 		this.taxID = taxID;
 		this.gender = gender;
-		
+
 		this.id = count;
 		count++;
 	}
@@ -97,5 +101,5 @@ public class Person {
 				+ ", empCategory=" + empCategory + ", isSLCitizen=" + isSLCitizen + ", taxID=" + taxID + ", gender="
 				+ gender + "]";
 	}
-	
+
 }
